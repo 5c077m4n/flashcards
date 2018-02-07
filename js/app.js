@@ -34,11 +34,15 @@ app.get('/hello', (req, res) => {
 	const name = req.cookies.username;
 	if(name) res.redirect('/');
 	else res.render('hello.pug');
-	
 });
 app.post('/hello', (req, res) => {
 	res.cookie('username', req.body.username);
-	res.redirect(`/`);
+	res.redirect('/');
+});
+
+app.post('/goodbye', (req, res) => {
+	res.clearCookie("username");
+	res.redirect('/hello');
 });
 
 app.listen(PORT, () => {

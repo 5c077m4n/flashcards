@@ -4,6 +4,7 @@ block content
 	section#content
 		if name
 			h2 Welcome, #{name}!
-			button(type = 'submit') Goodbye!
+			form(action='/goodbye', method='POST')
+				button(type = 'submit') Goodbye!
 		else
 			h2 Welcome!
