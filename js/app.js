@@ -33,7 +33,7 @@ app.get('/cards', (req, res) => {
 app.get('/hello', (req, res) => {
 	const name = req.cookies.username;
 	if(name) res.redirect('/');
-	else res.render('/hello');
+	else res.render('hello.pug');
 	
 });
 app.post('/hello', (req, res) => {
