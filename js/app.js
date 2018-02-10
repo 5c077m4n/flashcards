@@ -17,6 +17,17 @@ const [HOST, PORT] = ['127.0.0.1', 3000];
 // 	'purple'
 // ];
 
+app.use((req, res, next) => {
+	console.log('Hello');
+	// req.message = 'This message made it!';
+	const err = new Error('Oh no!');
+	next(err);
+});
+app.use((req, res, next) => {
+	console.log('World');
+	next();
+});
+
 app.get('/', (req, res) => {
 	const name = req.cookies.username;
 	if(name) res.render(`index.pug`, {name});
@@ -43,6 +54,11 @@ app.post('/hello', (req, res) => {
 app.post('/goodbye', (req, res) => {
 	res.clearCookie("username");
 	res.redirect('/hello');
+});
+
+app.use((err, req, res, next) => {
+	res.locals.error = err;
+	res.render('error');
 });
 
 app.listen(PORT, () => {
