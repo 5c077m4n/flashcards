@@ -7,6 +7,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.set('view engine', 'pug');
 
+const mainRoutes = require('../routes/');
+const cardRoutes = require('../routes/cards');
+app.use(mainRoutes);
+app.use('/cards', cardRoutes);
+
 const [HOST, PORT] = ['127.0.0.1', 3000];
 // const colors = [
 // 	'red',
@@ -18,46 +23,27 @@ const [HOST, PORT] = ['127.0.0.1', 3000];
 // ];
 
 app.use((req, res, next) => {
-	console.log('Hello');
+	// console.log('Hello');
 	// req.message = 'This message made it!';
 	const err = new Error('Oh no!');
-	next(err);
+	err.status = 500;
+	// next(err);
+	next();
 });
 app.use((req, res, next) => {
 	console.log('World');
 	next();
 });
 
-app.get('/', (req, res) => {
-	const name = req.cookies.username;
-	if(name) res.render(`index.pug`, {name});
-	else res.redirect('/hello');
-});
-
-app.get('/cards', (req, res) => {
-	res.render(`card`, {
-		prompt: `Who is buried in Grant's tomb?`,
-		hint: `Think about whose tomb it is.`
-	});
-});
-
-app.get('/hello', (req, res) => {
-	const name = req.cookies.username;
-	if(name) res.redirect('/');
-	else res.render('hello.pug');
-});
-app.post('/hello', (req, res) => {
-	res.cookie('username', req.body.username);
-	res.redirect('/');
-});
-
-app.post('/goodbye', (req, res) => {
-	res.clearCookie("username");
-	res.redirect('/hello');
+app.use((req, res, next) => {
+	const err = new Error('Page not found...');
+	err.status = 404;
+	next(err);
 });
 
 app.use((err, req, res, next) => {
 	res.locals.error = err;
+	res.status(err.status);
 	res.render('error');
 });
 
