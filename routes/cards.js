@@ -8,8 +8,18 @@ router.get('/:id', (req, res) => {
 	const {id} = req.params;
 	const text = cards[id][side];
 	const {hint} = cards[id];
-	const templateData = {text};
-	if(side.toLowerCase() === 'question') templateData.hint = hint;
+	const templateData = {id, text};
+	if(side.toLowerCase() === 'question')
+	{
+		templateData.hint = hint;
+		templateData.sideToShow = 'answer';
+		templateData.sideToShowDisplay = 'Answer';
+	}
+	else if(side === 'answer')
+	{
+		templateData.sideToShow = 'question';
+		templateData.sideToShowDisplay = 'Question';
+	}
 
 	res.render(`card`, templateData);
 });
