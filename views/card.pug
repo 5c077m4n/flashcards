@@ -6,4 +6,6 @@ block content
 		p
 			if hint
 				i (Hint: #{hint}.)
-		a(href=`${id}?side=${sideToShow}`) #{sideToShowDisplay}
+		a(href=`/cards/${id}?side=${sideToShow}`) Show the #{sideToShow}.
+		br
+		a(href=`/cards/`) Go to a random question.

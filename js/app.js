@@ -13,27 +13,6 @@ app.use(mainRoutes);
 app.use('/cards', cardRoutes);
 
 const [HOST, PORT] = ['127.0.0.1', 3000];
-// const colors = [
-// 	'red',
-// 	'orange',
-// 	'yellow',
-// 	'green',
-// 	'blue',
-// 	'purple'
-// ];
-
-app.use((req, res, next) => {
-	// console.log('Hello');
-	// req.message = 'This message made it!';
-	const err = new Error('Oh no!');
-	err.status = 500;
-	// next(err);
-	next();
-});
-app.use((req, res, next) => {
-	console.log('World');
-	next();
-});
 
 app.use((req, res, next) => {
 	const err = new Error('Page not found...');

@@ -4,7 +4,9 @@ block content
 	section#content
 		if name
 			h2 Welcome, #{name}!
+			p
+				a(href=`/cards/`) Go to the cards page.
 			form(action='/goodbye', method='POST')
-				button(type = 'submit') Goodbye!
+				button(type = 'submit') Logout
 		else
 			h2 Welcome!
