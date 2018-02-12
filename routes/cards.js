@@ -13,15 +13,17 @@ router.get('/:id', (req, res) => {
 		const {id} = req.params;
 
 		if(id >= cards.length)
-			res.redirect('/cards/');
-		
-		if(side.toLowerCase() !== 'question' & side.toLowerCase() !== 'answer')
-			res.redirect(`/cards/${id}?side=question`);
+			res.redirect(`/cards/${cards.length - 1}`);
+		// if(side.toLowerCase() !== 'question' & side.toLowerCase() !== 'answer')
+		// 	return res.redirect(`/cards/${id}?side=question`);
+		if(!side)
+			return res.redirect(`/cards/${id}?side=question`);
 		else
 		{
+			const name = req.cookies.username;
 			const text = cards[id][side];
 			const {hint} = cards[id];
-			const templateData = {id, text};
+			const templateData = {id, text, name};
 			if(side.toLowerCase() === 'question')
 			{
 				templateData.hint = hint;
@@ -31,7 +33,7 @@ router.get('/:id', (req, res) => {
 			{
 				templateData.sideToShow = 'question';
 			}
-			res.render(`card`, templateData);
+			return res.render(`card`, templateData);
 		}
 });
 
