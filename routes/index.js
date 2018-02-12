@@ -3,14 +3,13 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
 	const name = req.cookies.username;
-	if(name) res.render(`index.pug`, {name});
+	if (name) res.render('index', {name});
 	else res.redirect('/hello');
 });
 
 router.get('/hello', (req, res) => {
-	const name = req.cookies.username;
-	if(name) res.redirect('/');
-	else res.render('hello.pug');
+	if(req.cookies.username) res.redirect('/');
+	else res.render('hello');
 });
 router.post('/hello', (req, res) => {
 	res.cookie('username', req.body.username);
@@ -18,7 +17,7 @@ router.post('/hello', (req, res) => {
 });
 
 router.post('/goodbye', (req, res) => {
-	res.clearCookie("username");
+	res.clearCookie('username');
 	res.redirect('/hello');
 });
 
